@@ -93,6 +93,11 @@
 		21F5E9F020334AEE007B72A6 /* NearbyPlaces */ = {
 			isa = PBXGroup;
 			children = (
+				21F5EA2320335C8C007B72A6 /* Model */,
+				21F5EA2220335C30007B72A6 /* View */,
+				21F5EA2120335C1F007B72A6 /* ViewModel */,
+				21F5EA2020335C0F007B72A6 /* API */,
+				21F5EA1F20335BD5007B72A6 /* Helpers */,
 				21F5E9F120334AEE007B72A6 /* AppDelegate.swift */,
 				21F5E9F820334AEE007B72A6 /* Assets.xcassets */,
 				21F5E9FA20334AEE007B72A6 /* LaunchScreen.storyboard */,
@@ -117,6 +122,41 @@
 				21F5EA1320334AEF007B72A6 /* Info.plist */,
 			);
 			path = NearbyPlacesUITests;
+			sourceTree = "<group>";
+		};
+		21F5EA1F20335BD5007B72A6 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		21F5EA2020335C0F007B72A6 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		21F5EA2120335C1F007B72A6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		21F5EA2220335C30007B72A6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		21F5EA2320335C8C007B72A6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
