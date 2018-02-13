@@ -12,6 +12,12 @@
 		21F5E9FC20334AEE007B72A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21F5E9FA20334AEE007B72A6 /* LaunchScreen.storyboard */; };
 		21F5EA0720334AEF007B72A6 /* NearbyPlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5EA0620334AEF007B72A6 /* NearbyPlacesTests.swift */; };
 		21F5EA1220334AEF007B72A6 /* NearbyPlacesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5EA1120334AEF007B72A6 /* NearbyPlacesUITests.swift */; };
+		21F5EA25203365AB007B72A6 /* PlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5EA24203365AB007B72A6 /* PlacesTableViewController.swift */; };
+		21F5EA27203365ED007B72A6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5EA26203365ED007B72A6 /* MapViewController.swift */; };
+		21F5EA2A20337DE4007B72A6 /* TabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5EA2920337DE4007B72A6 /* TabCoordinator.swift */; };
+		21F5EA2E20337E47007B72A6 /* MapTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5EA2D20337E47007B72A6 /* MapTabCoordinator.swift */; };
+		21F5EA3020338E67007B72A6 /* PlacesTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5EA2F20338E67007B72A6 /* PlacesTabCoordinator.swift */; };
+		21F5EA322033973F007B72A6 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5EA312033973F007B72A6 /* AppCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +49,12 @@
 		21F5EA0D20334AEF007B72A6 /* NearbyPlacesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NearbyPlacesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21F5EA1120334AEF007B72A6 /* NearbyPlacesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPlacesUITests.swift; sourceTree = "<group>"; };
 		21F5EA1320334AEF007B72A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21F5EA24203365AB007B72A6 /* PlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTableViewController.swift; sourceTree = "<group>"; };
+		21F5EA26203365ED007B72A6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		21F5EA2920337DE4007B72A6 /* TabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCoordinator.swift; sourceTree = "<group>"; };
+		21F5EA2D20337E47007B72A6 /* MapTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabCoordinator.swift; sourceTree = "<group>"; };
+		21F5EA2F20338E67007B72A6 /* PlacesTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTabCoordinator.swift; sourceTree = "<group>"; };
+		21F5EA312033973F007B72A6 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +105,7 @@
 		21F5E9F020334AEE007B72A6 /* NearbyPlaces */ = {
 			isa = PBXGroup;
 			children = (
+				21F5EA2820337B0D007B72A6 /* Coordinator */,
 				21F5EA2320335C8C007B72A6 /* Model */,
 				21F5EA2220335C30007B72A6 /* View */,
 				21F5EA2120335C1F007B72A6 /* ViewModel */,
@@ -148,6 +161,8 @@
 		21F5EA2220335C30007B72A6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				21F5EA24203365AB007B72A6 /* PlacesTableViewController.swift */,
+				21F5EA26203365ED007B72A6 /* MapViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -157,6 +172,17 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		21F5EA2820337B0D007B72A6 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				21F5EA2920337DE4007B72A6 /* TabCoordinator.swift */,
+				21F5EA2D20337E47007B72A6 /* MapTabCoordinator.swift */,
+				21F5EA2F20338E67007B72A6 /* PlacesTabCoordinator.swift */,
+				21F5EA312033973F007B72A6 /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,6 +319,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				21F5E9F220334AEE007B72A6 /* AppDelegate.swift in Sources */,
+				21F5EA27203365ED007B72A6 /* MapViewController.swift in Sources */,
+				21F5EA2E20337E47007B72A6 /* MapTabCoordinator.swift in Sources */,
+				21F5EA2A20337DE4007B72A6 /* TabCoordinator.swift in Sources */,
+				21F5EA3020338E67007B72A6 /* PlacesTabCoordinator.swift in Sources */,
+				21F5EA25203365AB007B72A6 /* PlacesTableViewController.swift in Sources */,
+				21F5EA322033973F007B72A6 /* AppCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
