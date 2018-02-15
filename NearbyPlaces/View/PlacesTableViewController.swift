@@ -10,6 +10,8 @@ import UIKit
 
 class PlacesTableViewController: UITableViewController {
 
+    private var viewModel: PlacesTableViewViewModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -13,6 +13,9 @@
 		210C767620356F1F00DAADA6 /* NearbyPlacesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767520356F1F00DAADA6 /* NearbyPlacesResponse.swift */; };
 		210C767820356FEF00DAADA6 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767720356FEF00DAADA6 /* Place.swift */; };
 		210C767A203570F900DAADA6 /* URLSessionApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C7679203570F900DAADA6 /* URLSessionApiClient.swift */; };
+		210C767C2035763500DAADA6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767B2035763500DAADA6 /* LocationManager.swift */; };
+		210C767E2035807E00DAADA6 /* NearbyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767D2035807E00DAADA6 /* NearbyError.swift */; };
+		210C7680203589A900DAADA6 /* PlacesTableViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767F203589A900DAADA6 /* PlacesTableViewViewModel.swift */; };
 		21F5E9F220334AEE007B72A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5E9F120334AEE007B72A6 /* AppDelegate.swift */; };
 		21F5E9F920334AEE007B72A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21F5E9F820334AEE007B72A6 /* Assets.xcassets */; };
 		21F5E9FC20334AEE007B72A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21F5E9FA20334AEE007B72A6 /* LaunchScreen.storyboard */; };
@@ -50,6 +53,9 @@
 		210C767520356F1F00DAADA6 /* NearbyPlacesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPlacesResponse.swift; sourceTree = "<group>"; };
 		210C767720356FEF00DAADA6 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		210C7679203570F900DAADA6 /* URLSessionApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionApiClient.swift; sourceTree = "<group>"; };
+		210C767B2035763500DAADA6 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		210C767D2035807E00DAADA6 /* NearbyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyError.swift; sourceTree = "<group>"; };
+		210C767F203589A900DAADA6 /* PlacesTableViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTableViewViewModel.swift; sourceTree = "<group>"; };
 		21F5E9EE20334AEE007B72A6 /* NearbyPlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearbyPlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21F5E9F120334AEE007B72A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21F5E9F820334AEE007B72A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -154,6 +160,8 @@
 			children = (
 				210C767320356DB500DAADA6 /* Result.swift */,
 				210C767120356DAB00DAADA6 /* JSON.swift */,
+				210C767B2035763500DAADA6 /* LocationManager.swift */,
+				210C767D2035807E00DAADA6 /* NearbyError.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -171,6 +179,7 @@
 		21F5EA2120335C1F007B72A6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				210C767F203589A900DAADA6 /* PlacesTableViewViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -336,6 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				210C7680203589A900DAADA6 /* PlacesTableViewViewModel.swift in Sources */,
 				21F5E9F220334AEE007B72A6 /* AppDelegate.swift in Sources */,
 				210C767620356F1F00DAADA6 /* NearbyPlacesResponse.swift in Sources */,
 				21F5EA27203365ED007B72A6 /* MapViewController.swift in Sources */,
@@ -346,9 +356,11 @@
 				210C767020356AD500DAADA6 /* ApiClient.swift in Sources */,
 				21F5EA2A20337DE4007B72A6 /* TabCoordinator.swift in Sources */,
 				210C767420356DB500DAADA6 /* Result.swift in Sources */,
+				210C767C2035763500DAADA6 /* LocationManager.swift in Sources */,
 				21F5EA3020338E67007B72A6 /* PlacesTabCoordinator.swift in Sources */,
 				21F5EA25203365AB007B72A6 /* PlacesTableViewController.swift in Sources */,
 				21F5EA322033973F007B72A6 /* AppCoordinator.swift in Sources */,
+				210C767E2035807E00DAADA6 /* NearbyError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
