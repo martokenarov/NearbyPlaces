@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		210C767020356AD500DAADA6 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C766F20356AD500DAADA6 /* ApiClient.swift */; };
+		210C767220356DAB00DAADA6 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767120356DAB00DAADA6 /* JSON.swift */; };
+		210C767420356DB500DAADA6 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767320356DB500DAADA6 /* Result.swift */; };
+		210C767620356F1F00DAADA6 /* NearbyPlacesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767520356F1F00DAADA6 /* NearbyPlacesResponse.swift */; };
+		210C767820356FEF00DAADA6 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767720356FEF00DAADA6 /* Place.swift */; };
+		210C767A203570F900DAADA6 /* URLSessionApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C7679203570F900DAADA6 /* URLSessionApiClient.swift */; };
 		21F5E9F220334AEE007B72A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5E9F120334AEE007B72A6 /* AppDelegate.swift */; };
 		21F5E9F920334AEE007B72A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21F5E9F820334AEE007B72A6 /* Assets.xcassets */; };
 		21F5E9FC20334AEE007B72A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21F5E9FA20334AEE007B72A6 /* LaunchScreen.storyboard */; };
@@ -38,6 +44,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		210C766F20356AD500DAADA6 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		210C767120356DAB00DAADA6 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+		210C767320356DB500DAADA6 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		210C767520356F1F00DAADA6 /* NearbyPlacesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPlacesResponse.swift; sourceTree = "<group>"; };
+		210C767720356FEF00DAADA6 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		210C7679203570F900DAADA6 /* URLSessionApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionApiClient.swift; sourceTree = "<group>"; };
 		21F5E9EE20334AEE007B72A6 /* NearbyPlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearbyPlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21F5E9F120334AEE007B72A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21F5E9F820334AEE007B72A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -140,6 +152,8 @@
 		21F5EA1F20335BD5007B72A6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				210C767320356DB500DAADA6 /* Result.swift */,
+				210C767120356DAB00DAADA6 /* JSON.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -147,6 +161,9 @@
 		21F5EA2020335C0F007B72A6 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				210C766F20356AD500DAADA6 /* ApiClient.swift */,
+				210C767520356F1F00DAADA6 /* NearbyPlacesResponse.swift */,
+				210C7679203570F900DAADA6 /* URLSessionApiClient.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -170,6 +187,7 @@
 		21F5EA2320335C8C007B72A6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				210C767720356FEF00DAADA6 /* Place.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -319,9 +337,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				21F5E9F220334AEE007B72A6 /* AppDelegate.swift in Sources */,
+				210C767620356F1F00DAADA6 /* NearbyPlacesResponse.swift in Sources */,
 				21F5EA27203365ED007B72A6 /* MapViewController.swift in Sources */,
+				210C767820356FEF00DAADA6 /* Place.swift in Sources */,
+				210C767A203570F900DAADA6 /* URLSessionApiClient.swift in Sources */,
 				21F5EA2E20337E47007B72A6 /* MapTabCoordinator.swift in Sources */,
+				210C767220356DAB00DAADA6 /* JSON.swift in Sources */,
+				210C767020356AD500DAADA6 /* ApiClient.swift in Sources */,
 				21F5EA2A20337DE4007B72A6 /* TabCoordinator.swift in Sources */,
+				210C767420356DB500DAADA6 /* Result.swift in Sources */,
 				21F5EA3020338E67007B72A6 /* PlacesTabCoordinator.swift in Sources */,
 				21F5EA25203365AB007B72A6 /* PlacesTableViewController.swift in Sources */,
 				21F5EA322033973F007B72A6 /* AppCoordinator.swift in Sources */,
