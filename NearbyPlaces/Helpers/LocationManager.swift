@@ -11,12 +11,14 @@ import CoreLocation
 class LocationManager: NSObject, CLLocationManagerDelegate {
     static let shared = LocationManager()
     
-    public var updateLocation :((CLLocationCoordinate2D?, Error?) -> Void)?
+    typealias LocationResult = Result<CLLocationCoordinate2D, NearbyError>
+    
+    public var locationResult: ((LocationResult) -> ())?
     
     private var locationManager:CLLocationManager?
     private var currentLocation : CLLocationCoordinate2D? {
         didSet {
-            updateLocation?(currentLocation, nil)
+            locationResult?(.success(payload: currentLocation!))
         }
     }
     
@@ -45,22 +47,26 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        debugPrint("Error \(error)")
-        updateLocation?(nil, error)
-        // errorGettingCurrentLocation(error.localizedDescription)
+        debugPrint("Error \(error.localizedDescription)")
+        
+        locationResult?(.failure(NearbyError(title: "", description: error.localizedDescription, code: .unknownError)))
     }
     
     public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
+        
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
             locationManager?.startUpdatingLocation()
-        } else if status == .denied || status == .restricted {
-            updateLocation?(nil, nil)
-            // errorGettingCurrentLocation("Location access denied")
+        case .denied, .restricted:
+            // "Location access denied"
+            locationResult?(.failure(NearbyError(title: "", description: "Location access denied", code: .unknownError)))
+        case .notDetermined:
+            // "User should grant access to app in order to get location"
+            locationResult?(.failure(NearbyError(title: "", description: "User should grant access to app in order to get location", code: .unknownError)))
         }
     }
     
-    func didReceiveUserLocation(_ userLocation:CLLocation) {
+    private func didReceiveUserLocation(_ userLocation:CLLocation) {
         currentLocation = userLocation.coordinate
     }
-
 }
