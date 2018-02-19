@@ -9,6 +9,9 @@
 import UIKit
 import CoreLocation
 
+public let bars = "bar"
+public let fiftyMeters = 50
+
 private let geometryKey = "geometry"
 private let locationKey = "location"
 private let latitudeKey = "lat"
@@ -24,22 +27,23 @@ private let photosKey = "photos"
 struct Place {
     var placeId: String
     var location: CLLocationCoordinate2D?
-    var name: String?
+    var name: String
     var vicinity: String?
     var isOpen: Bool?
     var types: [String]?
-    
-    var details: JSON?
 }
 
 extension Place {
     init?(placeInfo:JSON) {
-        guard let placeId = placeInfo["place_id"] as? String else {
+        guard let placeId = placeInfo["place_id"] as? String, let name = placeInfo[nameKey] as? String  else {
             return nil
         }
         
         // id
         self.placeId = placeId
+        
+        // name
+        self.name = name
         
         // coordinates
         if let g = placeInfo[geometryKey] as? JSON {
@@ -49,9 +53,6 @@ extension Place {
                 }
             }
         }
-        
-        // name
-        name = placeInfo[nameKey] as? String
         
         // opening hours
         if let oh = placeInfo[openingHoursKey] as? JSON {
