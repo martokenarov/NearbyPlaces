@@ -41,5 +41,7 @@
 	</array>
 	<key>GoogleMapsApiKey</key>
 	<string>AIzaSyAAkzWEgotVmNkJd53ijBg799tUc13DmLo</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This application requires location services to work</string>
 </dict>
 </plist>
