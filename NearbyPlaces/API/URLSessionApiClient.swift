@@ -13,11 +13,12 @@ let kRadius = "radius"
 let kLocation = "location"
 let kTypes = "types"
 let kApiKey = "key"
+let kGoogleApiKey = "GoogleMapsApiKey"
 
 class URLSessionApiClient: ApiClient {
     static func getNearByUserPlaces(by category: String, coordinates: CLLocationCoordinate2D, radius: Int, token: String?, competion: @escaping GetNearByPlacesCompletion) {
         
-        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "GoogleMapsApiKey") else {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: kGoogleApiKey) else {
             competion(.failure(nil))
             debugPrint("Missing google api key")
             return
