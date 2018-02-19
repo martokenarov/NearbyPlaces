@@ -8,90 +8,91 @@
 
 import UIKit
 
-class PlacesTableViewController: UITableViewController {
+let placeCellIdentifier = "PlaceCell"
 
-    private var viewModel: PlacesTableViewViewModel?
+class PlacesTableViewController: UITableViewController {
+    
+    private var viewModel:PlacesTableViewViewModel
+    
+    init(with viewModel:PlacesTableViewViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        if let _ = self.tabBarController {
+            debugPrint("Has tabbar controller")
+        }
+        
+        viewModel.getPlaces()
+        bindViewModel()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let appTabbarController = self.tabBarController as? AppTabBarController {
+            appTabbarController.places = viewModel.places
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
 
+extension PlacesTableViewController {
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return viewModel.placeCells.value.count
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+        var cell: PlaceTableViewCell?
+        
+        if cell == nil {
+            tableView.register(PlaceTableViewCell.classForCoder(), forCellReuseIdentifier: placeCellIdentifier)
+            
+            cell = PlaceTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: placeCellIdentifier)
+            
+        }
+        
+        cell?.viewModel = viewModel.placeCells.value[indexPath.row]
+        
+        return cell!
     }
-    */
+}
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+extension PlacesTableViewController {
+    // MARK: - Table view delegate methods
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.openMap(for: indexPath.row)
     }
-    */
+}
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+extension PlacesTableViewController {
+    func bindViewModel() {
+        viewModel.placeCells.bindAndFire { [weak self] cells in
+            self?.tableView.reloadData()
+        }
+        
+        viewModel.onShowError = { [weak self] message in
+            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+            
+            self?.present(alert, animated: true, completion: nil)
+        }
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
