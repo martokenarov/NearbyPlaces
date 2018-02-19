@@ -8,20 +8,35 @@
 
 import Foundation
 
-protocol NearbyErrorProtocol: LocalizedError {
-    var title: String? { get }
-    var code: Int { get }
+enum ErrorCode: Int {
+    case unknownError
+    case connectionError
+    case invalidRequest
+    case notFound
+    case invalidResponse
+    case serverError
+    case serverUnavailable
+    case timeOut
+    case unsuppotedURL
+    case locAccessDenied
+    case notDetermined
 }
 
-struct NearbyError {
+protocol NearbyErrorProtocol: LocalizedError {
+    var title: String? { get }
+    var code: ErrorCode { get }
+}
+
+struct NearbyError: NearbyErrorProtocol {
+    
     var title: String?
-    var code: Int
+    var code: ErrorCode
     var errorDescription: String? { return _description }
     var failureReason: String? { return _description }
     
     private var _description: String
     
-    init(title: String?, description: String, code: Int) {
+    init(title: String?, description: String, code: ErrorCode) {
         self.title = title ?? "Error"
         self._description = description
         self.code = code
