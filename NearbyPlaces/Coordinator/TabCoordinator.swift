@@ -9,22 +9,10 @@
 import Foundation
 import UIKit
 
+public protocol Coordinator {
+    func start()
+}
+
 public protocol TabCoordinator {
-    associatedtype RootType: UIViewController
-    var rootController: RootType { get }
-    var tabBarItem: UITabBarItem { get }
-}
-
-public class AnyTabCoordinator {
-    var rootController: UIViewController
-    var tabBarItem: UITabBarItem
-    
-    public init<T: TabCoordinator>(_ tabCoordinator: T) {
-        rootController = tabCoordinator.rootController
-        tabBarItem = tabCoordinator.tabBarItem
-    }
-}
-
-public func deGenericize<T: TabCoordinator>(_ coordinator: T) -> AnyTabCoordinator {
-    return AnyTabCoordinator(coordinator)
+    func viewController() -> UIViewController
 }

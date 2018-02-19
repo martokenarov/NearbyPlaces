@@ -7,16 +7,21 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MapTabCoordinator: TabCoordinator {
     var rootController: UIViewController
     var tabBarItem: UITabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "Map"), tag: 1)
     
     init() {
-        let mapVC = MapViewController()
+        let mapVC = MapViewController(with: MapViewViewModel())
         mapVC.tabBarItem = tabBarItem
         mapVC.view.backgroundColor = UIColor.blue
         rootController = mapVC
         rootController.tabBarItem = tabBarItem
+    }
+    
+    func viewController() -> UIViewController {
+        return rootController
     }
 }

@@ -15,16 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        let tabBarController = UITabBarController()
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let tabBarController = AppTabBarController()
         let placesTabCoordinator = PlacesTabCoordinator()
         let mapTabCoordinator = MapTabCoordinator()
         
-        let appCoordinator = AppCoordinator(tabBarController: tabBarController, tabs: [AnyTabCoordinator(placesTabCoordinator), AnyTabCoordinator(mapTabCoordinator)])
+        let appCoordinator = AppCoordinator(window: window!, tabBarController: tabBarController, tabs: [placesTabCoordinator, mapTabCoordinator])
         appCoordinator.start()
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = tabBarController
-        window?.makeKeyAndVisible()
         
         return true
     }
