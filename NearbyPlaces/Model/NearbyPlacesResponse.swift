@@ -8,24 +8,27 @@
 
 import Foundation
 
+// Places response
+private var nextPageTokenKey = "next_page_token"
+private var statusKey = "status"
+private var resultsKey = "results"
+
 struct NearbyPlacesResponse {
     var nextPageToken: String?
     var status: String  = "NOK"
-    var places: [Place]?
+    var places: [JSON]?
     
     init?(dic:JSON?) {
-        nextPageToken = dic?["next_page_token"] as? String
+        nextPageToken = dic?[nextPageTokenKey] as? String
         
-        if let status = dic?["status"] as? String {
+        if let status = dic?[statusKey] as? String {
             self.status = status
         }
         
-        if let results = dic?["results"] as? [[String : Any]]{
-            var places = [Place]()
+        if let results = dic?[resultsKey] as? [[String : Any]]{
+            var places = [JSON]()
             for place in results {
-                if let place = Place(placeInfo: place) {
-                    places.append(place)
-                }
+                places.append(place)
             }
             self.places = places
         }

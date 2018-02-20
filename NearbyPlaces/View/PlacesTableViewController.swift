@@ -85,14 +85,18 @@ extension PlacesTableViewController {
 extension PlacesTableViewController {
     func bindViewModel() {
         viewModel.placeCells.bindAndFire { [weak self] cells in
-            self?.tableView.reloadData()
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
         }
         
         viewModel.onShowError = { [weak self] message in
             let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
             
-            self?.present(alert, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self?.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }

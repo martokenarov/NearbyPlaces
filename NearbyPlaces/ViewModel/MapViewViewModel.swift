@@ -16,9 +16,9 @@ class MapViewViewModel {
     public var onShowError: ((_ message: String) -> Void)?
     
     public func willDisplayMap(with places:[Place]) {
-        self.annotationModels.value = places.map({ (place) -> AnnotationModel in
-            return AnnotationModel(coordinate: place.location!, distance: 0, name: place.name)
-        })
+//        self.annotationModels.value = places.map({ (place) -> AnnotationModel in
+//            return AnnotationModel(coordinate: place.location!, distance: 0, name: place.name)
+//        })
     }
 }
 

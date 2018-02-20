@@ -9,8 +9,12 @@
 import UIKit
 import CoreLocation
 
+public let bars = "bar"
+public let fiftyMeters = 50
+
 class PlacesTableViewViewModel {
     
+    private var persistentManager: Persistent
     private var nextToken: Bindable = Bindable("")
     private var locationManager: LocationManager = LocationManager.shared
     
@@ -21,6 +25,10 @@ class PlacesTableViewViewModel {
     public var placeCells = Bindable([PlaceCellViewModel]())
     
     public weak var delegate:PlacesTabCoordinatorDelegate?
+    
+    init(with persistentManager: Persistent) {
+        self.persistentManager = persistentManager
+    }
     
     public func getPlaces() {
         locationManager.determineMyCurrentLocation()
@@ -86,14 +94,16 @@ class PlacesTableViewViewModel {
                 return
             }
             
-            self.placeCells.value = places.map({ (place) -> PlaceCellViewModel in
-                var viewModel = PlaceCellViewModel(place.name, distance: 0)
-                viewModel.location = place.location
-                
-                return viewModel
-            })
-            
-            self.places = places
+            persistentManager.save(with: places)
+            debugPrint("Core data directory: \(CoreDataStack.sharedInstance.applicationDocumentsDirectory())")
+//            self.placeCells.value = places.map({ (place) -> PlaceCellViewModel in
+//                var viewModel = PlaceCellViewModel(place.name, distance: 0)
+//                viewModel.location = place.location
+//
+//                return viewModel
+//            })
+//
+//            self.places = places
             break
         case .failure(let error):
             if let error = error {

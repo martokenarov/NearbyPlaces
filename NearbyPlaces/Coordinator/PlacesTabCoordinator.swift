@@ -21,7 +21,7 @@ class PlacesTabCoordinator: TabCoordinator {
     var location: CLLocationCoordinate2D = CLLocationCoordinate2D()
     
     init() {
-        let placesTableViewViewModel = PlacesTableViewViewModel()
+        let placesTableViewViewModel = PlacesTableViewViewModel(with: PersistentCoreData(with: CoreDataStack.sharedInstance))
         
         let placesVC = PlacesTableViewController(with: placesTableViewViewModel)
         placesVC.tabBarItem = tabBarItem
