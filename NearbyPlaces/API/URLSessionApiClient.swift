@@ -24,7 +24,7 @@ class URLSessionApiClient: ApiClient {
             return
         }
         
-        let urlString = kGoogleMapsAPIBaseURL + kGoogleSearchPath + "?\(kLocation)=\(coordinates.latitude),\(coordinates.longitude)&\(kRadius)=\(radius)&\(kApiKey)=\(apiKey)"
+        let urlString = kGoogleMapsAPIBaseURL + kGoogleSearchPath + "?\(kLocation)=\(coordinates.latitude),\(coordinates.longitude)&\(kRadius)=\(radius)&\(kTypes)=\(bars)&\(kApiKey)=\(apiKey)"
         
         guard let url = URL(string: urlString) else {
             debugPrint("Falled to load url")
