@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 private let geometryKey = "geometry"
 private let locationKey = "location"
@@ -28,13 +29,14 @@ public class Place: NSManagedObject {
 }
 
 extension Place {
-    static func createPlaceEntityFrom(dictionary: JSON, context: NSManagedObjectContext) -> NSManagedObject? {
+    static func createPlaceEntityFrom(dictionary: JSON, userLocation: CLLocation, context: NSManagedObjectContext) -> NSManagedObject? {
         
         guard let placeId = dictionary["place_id"] as? String, let name = dictionary[nameKey] as? String  else {
             return nil
         }
         
         if let placeEntity = NSEntityDescription.insertNewObject(forEntityName: "Place", into: context) as? Place {
+            var location:CLLocation
             // id
             placeEntity.placeId = placeId
             
@@ -45,9 +47,11 @@ extension Place {
             if let g = dictionary[geometryKey] as? JSON {
                 if let l = g[locationKey] as? [String:Double] {
                     if let lat = l[latitudeKey], let lng = l[longitudeKey] {
-//                        location = CLLocationCoordinate2D.init(latitude: lat, longitude: lng)
+                        location = CLLocation(latitude: lat, longitude: lng) //CLLocationCoordinate2D.init(latitude: lat, longitude: lng)
                         placeEntity.latitude = lat
                         placeEntity.longitude = lng
+                        
+                        placeEntity.distance = location.distance(from: userLocation).rounded(toPlaces: 2)
                     }
                 }
             }

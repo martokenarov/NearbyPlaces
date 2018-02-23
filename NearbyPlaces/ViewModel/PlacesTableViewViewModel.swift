@@ -8,52 +8,82 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 public let bars = "bar"
-public let fiftyMeters = 50
+public let fiveHundredMeters = 500
 
 class PlacesTableViewViewModel {
     
     private var persistentManager: Persistent
-    private var nextToken: Bindable = Bindable("")
-    private var locationManager: LocationManager = LocationManager.shared
+    private var locationManager: LocationManager
+    private var apiClient: ApiClient
     
-    var location: CLLocationCoordinate2D?
-    var places: [Place]?
+    var location: CLLocation?
+    var places: [NSManagedObject]?
     
     public var onShowError: ((_ message: String) -> Void)?
     public var placeCells = Bindable([PlaceCellViewModel]())
     
-    public weak var delegate:PlacesTabCoordinatorDelegate?
-    
-    init(with persistentManager: Persistent) {
+    init(with persistentManager: Persistent,
+         locationManager: LocationManager = LocationManager.shared,
+         apiClient: ApiClient = URLSessionApiClient()) {
         self.persistentManager = persistentManager
+        self.locationManager = locationManager
+        self.apiClient = apiClient
     }
     
     public func getPlaces() {
-        locationManager.determineMyCurrentLocation()
         
-        locationManager.locationResult = { result in
+        if Reachability.isConnectedToNetwork() == true {
+            locationManager.determineMyCurrentLocation()
             
-            switch(result) {
-            case .success(let coordinate):
-                debugPrint("Get places for coordinate \(coordinate)")
+            locationManager.locationResult = { [weak self] result in
                 
-                URLSessionApiClient.getNearByUserPlaces(by: bars, coordinates: coordinate, radius: fiftyMeters, token: nil, competion: { (placesResult) in
-                    debugPrint(placesResult)
-                    self.location = coordinate
-                    self.parse(placesResult)
-                })
-                
-                break
-            case .failure(let error):
-                debugPrint("Error - \(String(describing: error?.localizedDescription))")
-                
-                if let error = error {
-                    self.onShowError?(error.localizedDescription)
+                switch(result) {
+                case .success(let coordinate):
+                    debugPrint("Get places for coordinate \(coordinate)")
+                    
+                    guard let apiKey = Bundle.main.object(forInfoDictionaryKey: kGoogleApiKey) else {
+                        debugPrint("Missing google api key")
+                        
+                        self?.onShowError?("Something went wrong.")
+                        
+                        return
+                    }
+                    
+                    let url = URLBuilder.generateNearByPlacesUrl(for: bars, coordinates: coordinate, apiKey: apiKey, radius: fiveHundredMeters)
+                    
+                    self?.apiClient.getNearByUserPlaces(by: url, competion: { (placesResult) in
+                        debugPrint(placesResult)
+                        
+                        self?.location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                        
+                        guard let places = NearbyPlacesResponse.parse(placesResult) else {
+                            self?.onShowError?("Error parsing result")
+                            return
+                        }
+                        
+                        guard let userLocation = self?.location else {
+                            self?.onShowError?("Cannot get user location")
+                            return
+                        }
+                        
+                        self?.saveData(places: places, userLocation: userLocation)
+                    })
+                    
+                    break
+                case .failure(let error):
+                    debugPrint("Error - \(String(describing: error?.localizedDescription))")
+                    
+                    if let error = error {
+                        self?.onShowError?(error.localizedDescription)
+                    }
+                    break
                 }
-                break
             }
+        } else {
+            loadData()
         }
     }
     
@@ -65,53 +95,110 @@ class PlacesTableViewViewModel {
             return
         }
         
-        guard let url = URL(string:"comgooglemaps://") else {
-            self.onShowError?("Invalid URL scheme")
-            return
+        // https://www.google.com/maps/search/?api=1&query=\(location.coordinate.latitude),\(location.coordinate.longitude)
+        
+        guard let url = URL(string: URLBuilder.generateOpenMapsAppUrl(for: location.coordinate)) else {
+                self.onShowError?("Invalid URL scheme")
+                return
         }
         
         if (UIApplication.shared.canOpenURL(url)) {
-            UIApplication.shared.openURL(URL(string:
-                "comgooglemaps://?saddr=&daddr=\(location.latitude),\(location.longitude)&directionsmode=driving")!)
+            UIApplication.shared.open(url, options: [:], completionHandler: { isOpen in
+                    if !isOpen {
+                        self.onShowError?("Can't open google maps")
+                    }
+            })
         } else {
             debugPrint("Can't use google maps")
             self.onShowError?("Can't use google maps")
         }
     }
     
-    public func endDisplayViewController() {
-        guard let location = location, let places = places else {
-            return
+    private func clear(compeltion: @escaping (Bool) -> Void) {
+        persistentManager.clear { [weak self] result in
+            
+            switch result {
+            case .success(let payload):
+                
+                if payload == true {
+                    compeltion(payload)
+                }
+                
+                break
+            case .failure(let error):
+                
+                if let error = error {
+                    self?.onShowError?(error.localizedDescription)
+                }
+                
+                break
+            }
         }
-        
-        delegate?.didEndDisplay(userLocation: location, places: places)
     }
     
-    private func parse(_ result: GetNearByPlacesResult) {
-        switch result {
-        case .success(let response):
-            guard let places = response.places else {
-                return
-            }
-            
-            persistentManager.save(with: places)
-            debugPrint("Core data directory: \(CoreDataStack.sharedInstance.applicationDocumentsDirectory())")
-//            self.placeCells.value = places.map({ (place) -> PlaceCellViewModel in
-//                var viewModel = PlaceCellViewModel(place.name, distance: 0)
-//                viewModel.location = place.location
-//
-//                return viewModel
-//            })
-//
-//            self.places = places
-            break
-        case .failure(let error):
-            if let error = error {
-                self.onShowError?(error.localizedDescription)
-            }
-            
-            break
+    private func saveData(places: [JSON], userLocation: CLLocation) {
+        self.clear { [weak self] (success) in
+            self?.persistentManager.save(with: places, userLocation: userLocation, completion: { (result) in
+                
+                debugPrint("Core data directory: \(CoreDataStack.sharedInstance.applicationDocumentsDirectory())")
+                
+                switch result {
+                case .success( _):
+                    self?.loadData()
+                    break
+                case .failure(let error):
+                    if let error = error {
+                        debugPrint("Error: \(error.localizedDescription)")
+                        
+                        self?.onShowError?(error.localizedDescription)
+                    }
+                    break
+                }
+            })
         }
+    }
+    
+    private func loadData() {
+        persistentManager.load(with: { [weak self] result in
+            debugPrint("result \(result)")
+            switch result {
+            case .success(let payload):
+                debugPrint("Success - \(payload)")
+                self?.populateCells(places: payload)
+                break
+            case .failure(let error):
+                
+                if let error = error {
+                    debugPrint("Error: \(error.localizedDescription)")
+                    
+                    self?.onShowError?(error.localizedDescription)
+                }
+                
+                break
+            }
+        })
+    }
+    
+    private func populateCells(places: [NSManagedObject]) {
+        self.placeCells.value = places.map({ (place) -> PlaceCellViewModel in
+            
+            var viewModel = PlaceCellViewModel("", distance: 0)
+            
+            if let name = place.value(forKey: "name") as? String {
+                viewModel.name = name
+            }
+            
+            if let latitude = place.value(forKey: "latitude") as? Double,
+                let longitude = place.value(forKey: "longitude") as? Double {
+                
+                viewModel.location = CLLocation(latitude: latitude, longitude: longitude)
+                viewModel.distance = place.value(forKey: "distance") as? Double ?? 0
+            }
+            
+            return viewModel
+        })
+        
+        self.places = places
     }
 }
 

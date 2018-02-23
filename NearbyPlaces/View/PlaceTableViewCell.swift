@@ -25,6 +25,8 @@ class PlaceTableViewCell: UITableViewCell {
 
     private func bindViewModel() {
         self.textLabel?.text = viewModel?.name
-        self.detailTextLabel?.text = String(describing: viewModel?.distance)
+        if let distance = viewModel?.distance {
+            self.detailTextLabel?.text = "Distance - \(distance)"
+        }
     }
 }

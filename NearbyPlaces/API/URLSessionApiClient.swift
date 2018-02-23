@@ -9,24 +9,10 @@
 import Foundation
 import CoreLocation
 
-let kRadius = "radius"
-let kLocation = "location"
-let kTypes = "types"
-let kApiKey = "key"
-let kGoogleApiKey = "GoogleMapsApiKey"
-
 class URLSessionApiClient: ApiClient {
-    static func getNearByUserPlaces(by category: String, coordinates: CLLocationCoordinate2D, radius: Int, token: String?, competion: @escaping GetNearByPlacesCompletion) {
+    func getNearByUserPlaces(by url:String, competion: @escaping GetNearByPlacesCompletion) {
         
-        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: kGoogleApiKey) else {
-            competion(.failure(nil))
-            debugPrint("Missing google api key")
-            return
-        }
-        
-        let urlString = kGoogleMapsAPIBaseURL + kGoogleSearchPath + "?\(kLocation)=\(coordinates.latitude),\(coordinates.longitude)&\(kRadius)=\(radius)&\(kTypes)=\(bars)&\(kApiKey)=\(apiKey)"
-        
-        guard let url = URL(string: urlString) else {
+        guard let url = URL(string: url) else {
             debugPrint("Falled to load url")
             competion(.failure(nil))
             return

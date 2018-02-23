@@ -27,7 +27,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor.clear
         
         self.mapView = MKMapView(frame: self.view.frame)
         
@@ -47,7 +47,11 @@ class MapViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if let appTabbarController = self.tabBarController as? AppTabBarController {
-            viewModel.willDisplayMap(with: appTabbarController.places!)
+            
+            if let places = appTabbarController.viewModel.places {
+                viewModel.userLocation = appTabbarController.viewModel.userLocation
+                viewModel.willDisplayMap(with: places)
+            }
         }
     }
 
@@ -70,8 +74,14 @@ extension MapViewController: MKMapViewDelegate {
                 pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pinIdent)
             }
             
+            pinView.canShowCallout = true
+
             return pinView
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        
     }
 }
 
@@ -80,14 +90,31 @@ extension MapViewController {
 
         viewModel.annotationModels.bindAndFire { [weak self] annotations in
             let mapAnnotations = annotations.map({ (annotationModel) -> MKPointAnnotation in
+                
                 let anno = MKPointAnnotation()
-                anno.coordinate = annotationModel.coordinate
-                anno.title = annotationModel.name
+                
+                if let location = annotationModel.location {
+                    anno.coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                }
+                
+                if let name = annotationModel.name {
+                    anno.title = name
+                }
+                
+                if let distance = annotationModel.distance {
+                    anno.subtitle = "\(distance)"
+                }
                 
                 return anno
             })
             
             self?.mapView?.addAnnotations(mapAnnotations)
+            
+            if let userLocation = self?.viewModel.userLocation {
+                let region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 1000, 1000)
+                self?.mapView?.setRegion(region, animated: true)
+                self?.mapView?.showsUserLocation = true
+            }
         }
         
         viewModel.onShowError = { [weak self] message in

@@ -27,9 +27,7 @@ class PlacesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let _ = self.tabBarController {
-            debugPrint("Has tabbar controller")
-        }
+        tableView.tableFooterView = UIView()
         
         viewModel.getPlaces()
         bindViewModel()
@@ -37,7 +35,8 @@ class PlacesTableViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         if let appTabbarController = self.tabBarController as? AppTabBarController {
-            appTabbarController.places = viewModel.places
+            appTabbarController.viewModel.places = viewModel.places
+            appTabbarController.viewModel.userLocation = viewModel.location
         }
     }
 
@@ -64,7 +63,7 @@ extension PlacesTableViewController {
         if cell == nil {
             tableView.register(PlaceTableViewCell.classForCoder(), forCellReuseIdentifier: placeCellIdentifier)
             
-            cell = PlaceTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: placeCellIdentifier)
+            cell = PlaceTableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: placeCellIdentifier)
             
         }
         
@@ -76,7 +75,6 @@ extension PlacesTableViewController {
 
 extension PlacesTableViewController {
     // MARK: - Table view delegate methods
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.openMap(for: indexPath.row)
     }

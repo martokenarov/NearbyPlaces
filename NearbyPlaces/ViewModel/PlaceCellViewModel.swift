@@ -11,10 +11,10 @@ import CoreLocation
 
 struct PlaceCellViewModel {
     var name: String
-    var distance: Int
-    var location: CLLocationCoordinate2D?
+    var distance: Double
+    var location: CLLocation?
     
-    init(_ name: String, distance: Int) {
+    init(_ name: String, distance: Double) {
         self.name = name
         self.distance = distance
     }

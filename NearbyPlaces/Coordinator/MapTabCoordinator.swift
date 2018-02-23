@@ -16,7 +16,7 @@ class MapTabCoordinator: TabCoordinator {
     init() {
         let mapVC = MapViewController(with: MapViewViewModel())
         mapVC.tabBarItem = tabBarItem
-        mapVC.view.backgroundColor = UIColor.blue
+        mapVC.view.backgroundColor = UIColor.clear
         rootController = mapVC
         rootController.tabBarItem = tabBarItem
     }

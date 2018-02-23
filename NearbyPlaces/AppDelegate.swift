@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        let tabBarController = AppTabBarController()
+        let tabBarController = AppTabBarController(with: AppTabBarViewModel())
         let placesTabCoordinator = PlacesTabCoordinator()
         let mapTabCoordinator = MapTabCoordinator()
         

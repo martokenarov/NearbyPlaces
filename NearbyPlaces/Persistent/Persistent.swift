@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 typealias DataResult = Result<[NSManagedObject], NearbyError>
 typealias OperationResult = Result<Bool, NearbyError>
@@ -17,7 +18,7 @@ typealias SavePlaces = (OperationResult) -> Void
 typealias ClearDB = (OperationResult) -> Void
 
 protocol Persistent {
-    func save(with places: [JSON], completion: @escaping SavePlaces)
+    func save(with places: [JSON], userLocation: CLLocation, completion: @escaping SavePlaces)
     func load(with completion: @escaping GetPlacesFromStorage)
     func clear(with completion: @escaping ClearDB)
 }

@@ -41,3 +41,20 @@ struct NearbyPlacesResponse {
         return false
     }
 }
+
+extension NearbyPlacesResponse {
+    
+    static func parse(_ result: GetNearByPlacesResult) -> [JSON]? {
+        switch result {
+        case .success(let response):
+            guard let places = response.places else {
+                return nil
+            }
+            
+            return places
+        case .failure( _):
+            
+            return nil
+        }
+    }
+}
