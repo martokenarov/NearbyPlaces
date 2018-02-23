@@ -16,7 +16,7 @@ public let fiveHundredMeters = 500
 class PlacesTableViewViewModel {
     
     private var persistentManager: Persistent
-    private var locationManager: LocationManager
+    private var locationManager: Location
     private var apiClient: ApiClient
     
     var location: CLLocation?
@@ -26,8 +26,8 @@ class PlacesTableViewViewModel {
     public var placeCells = Bindable([PlaceCellViewModel]())
     
     init(with persistentManager: Persistent,
-         locationManager: LocationManager = LocationManager.shared,
-         apiClient: ApiClient = URLSessionApiClient()) {
+         locationManager: Location,
+         apiClient: ApiClient) {
         self.persistentManager = persistentManager
         self.locationManager = locationManager
         self.apiClient = apiClient
@@ -36,9 +36,8 @@ class PlacesTableViewViewModel {
     public func getPlaces() {
         
         if Reachability.isConnectedToNetwork() == true {
-            locationManager.determineMyCurrentLocation()
             
-            locationManager.locationResult = { [weak self] result in
+            self.locationManager.result = { [weak self] result in
                 
                 switch(result) {
                 case .success(let coordinate):
@@ -82,6 +81,8 @@ class PlacesTableViewViewModel {
                     break
                 }
             }
+            
+            self.locationManager.determineMyCurrentLocation()
         } else {
             loadData()
         }

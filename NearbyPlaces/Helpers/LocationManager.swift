@@ -8,17 +8,23 @@
 
 import CoreLocation
 
-class LocationManager: NSObject, CLLocationManagerDelegate {
+typealias LocationResult = Result<CLLocationCoordinate2D, NearbyError>
+
+protocol Location {
+    var result: ((LocationResult) -> ())? { get set }
+    
+    func determineMyCurrentLocation()
+}
+
+class LocationManager: NSObject, CLLocationManagerDelegate, Location {
     static let shared = LocationManager()
     
-    typealias LocationResult = Result<CLLocationCoordinate2D, NearbyError>
-    
-    public var locationResult: ((LocationResult) -> ())?
+    public var result: ((LocationResult) -> ())?
     
     private var locationManager:CLLocationManager?
     private var currentLocation : CLLocationCoordinate2D? {
         didSet {
-            locationResult?(.success(payload: currentLocation!))
+            result?(.success(payload: currentLocation!))
         }
     }
     
@@ -49,20 +55,20 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         debugPrint("Error \(error.localizedDescription)")
         
-        locationResult?(.failure(NearbyError(title: "", description: error.localizedDescription, code: .unknownError)))
+        result?(.failure(NearbyError(title: "", description: error.localizedDescription, code: .unknownError)))
     }
     
-    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
             locationManager?.startUpdatingLocation()
         case .denied, .restricted:
             // "Location access denied"
-            locationResult?(.failure(NearbyError(title: "", description: "Location access denied", code: .unknownError)))
+            result?(.failure(NearbyError(title: "", description: "Location access denied", code: .unknownError)))
         case .notDetermined:
             // "User should grant access to app in order to get location"
-            locationResult?(.failure(NearbyError(title: "", description: "User should grant access to app in order to get location", code: .unknownError)))
+            result?(.failure(NearbyError(title: "", description: "User should grant access to app in order to get location", code: .unknownError)))
         }
     }
     

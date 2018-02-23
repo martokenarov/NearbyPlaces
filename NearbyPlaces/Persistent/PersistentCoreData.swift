@@ -12,7 +12,7 @@ import CoreLocation
 
 class PersistentCoreData: NSObject, Persistent {
     private var coreData: CoreDataStack
-        
+    
     init(with coreData: CoreDataStack) {
         self.coreData = coreData
     }

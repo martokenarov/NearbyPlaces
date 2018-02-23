@@ -33,25 +33,5 @@ class GoogleResultTest: XCTestCase {
             XCTAssertNotNil(NearbyPlacesResponse(dic:json))
         }
     }
-
-    
-}
-
-extension FileManager {
-    
-    static func readJson(forResource fileName: String ) -> Data? {
-        
-        let bundle = Bundle(for: NearbyPlacesTests.self)
-        if let path = bundle.path(forResource: fileName, ofType: "json") {
-            do {
-                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-                return data
-            } catch {
-                // handle error
-            }
-        }
-        
-        return nil
-    }
 }
 
