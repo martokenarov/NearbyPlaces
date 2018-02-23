@@ -13,7 +13,7 @@ import CoreLocation
 class AppTabBarController: UITabBarController {
 
     private(set) var viewModel: AppTabBarViewModel
-        
+    
     init(with viewModel:AppTabBarViewModel) {
         self.viewModel = viewModel
         

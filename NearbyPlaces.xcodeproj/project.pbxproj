@@ -19,6 +19,13 @@
 		210F8406203A592C00F62302 /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210F8405203A592C00F62302 /* AppTabBarController.swift */; };
 		210FC565203B0D3D0060E8B5 /* Places.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 210FC563203B0D3D0060E8B5 /* Places.xcdatamodeld */; };
 		211D5FD6203F191F00DD21CD /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211D5FD5203F191F00DD21CD /* URLBuilder.swift */; };
+		211D5FD92040051800DD21CD /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767120356DAB00DAADA6 /* JSON.swift */; };
+		211D5FDA2040053700DD21CD /* NearbyPlacesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767520356F1F00DAADA6 /* NearbyPlacesResponse.swift */; };
+		211D5FDB2040087000DD21CD /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C766F20356AD500DAADA6 /* ApiClient.swift */; };
+		211D5FDC2040099A00DD21CD /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C767320356DB500DAADA6 /* Result.swift */; };
+		211D5FDE2040228100DD21CD /* sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 211D5FDD2040228000DD21CD /* sample.json */; };
+		211D5FE0204025AB00DD21CD /* sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 211D5FDD2040228000DD21CD /* sample.json */; };
+		211D5FE2204026B500DD21CD /* GoogleResultTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211D5FE1204026B500DD21CD /* GoogleResultTest.swift */; };
 		21459194203613C600BB0B54 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21459193203613C500BB0B54 /* PlaceTableViewCell.swift */; };
 		214591962036157100BB0B54 /* PlaceCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214591952036157100BB0B54 /* PlaceCellViewModel.swift */; };
 		21784EC3203ED6B000FBD25D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21784EC2203ED6B000FBD25D /* Extensions.swift */; };
@@ -73,6 +80,8 @@
 		210F8405203A592C00F62302 /* AppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
 		210FC564203B0D3D0060E8B5 /* Places.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Places.xcdatamodel; sourceTree = "<group>"; };
 		211D5FD5203F191F00DD21CD /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
+		211D5FDD2040228000DD21CD /* sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample.json; sourceTree = "<group>"; };
+		211D5FE1204026B500DD21CD /* GoogleResultTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleResultTest.swift; sourceTree = "<group>"; };
 		21459193203613C500BB0B54 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		214591952036157100BB0B54 /* PlaceCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCellViewModel.swift; sourceTree = "<group>"; };
 		21784EC2203ED6B000FBD25D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -182,8 +191,10 @@
 		21F5EA0520334AEF007B72A6 /* NearbyPlacesTests */ = {
 			isa = PBXGroup;
 			children = (
+				211D5FDD2040228000DD21CD /* sample.json */,
 				21F5EA0620334AEF007B72A6 /* NearbyPlacesTests.swift */,
 				21F5EA0820334AEF007B72A6 /* Info.plist */,
+				211D5FE1204026B500DD21CD /* GoogleResultTest.swift */,
 			);
 			path = NearbyPlacesTests;
 			sourceTree = "<group>";
@@ -371,6 +382,7 @@
 			files = (
 				21F5E9FC20334AEE007B72A6 /* LaunchScreen.storyboard in Resources */,
 				21F5E9F920334AEE007B72A6 /* Assets.xcassets in Resources */,
+				211D5FE0204025AB00DD21CD /* sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +390,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				211D5FDE2040228100DD21CD /* sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,7 +445,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				211D5FDC2040099A00DD21CD /* Result.swift in Sources */,
+				211D5FD92040051800DD21CD /* JSON.swift in Sources */,
+				211D5FDA2040053700DD21CD /* NearbyPlacesResponse.swift in Sources */,
 				21F5EA0720334AEF007B72A6 /* NearbyPlacesTests.swift in Sources */,
+				211D5FDB2040087000DD21CD /* ApiClient.swift in Sources */,
+				211D5FE2204026B500DD21CD /* GoogleResultTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,7 +606,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kenarov.NearbyPlaces;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -602,7 +620,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kenarov.NearbyPlaces;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

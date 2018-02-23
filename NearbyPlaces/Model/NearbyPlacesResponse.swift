@@ -26,11 +26,7 @@ struct NearbyPlacesResponse {
         }
         
         if let results = dic?[resultsKey] as? [[String : Any]]{
-            var places = [JSON]()
-            for place in results {
-                places.append(place)
-            }
-            self.places = places
+            self.places = results
         }
     }
     
